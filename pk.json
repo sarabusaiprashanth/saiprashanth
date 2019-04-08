@@ -1,9 +1,6 @@
 {
 	"Dependencies":
 		[
-		"urllib3==1.22",
-		"twitter==1.17.1"
-			
 		"beautifulsoup4==4.4.1",
 		"boto==2.48.0",
 		"bz2file==0.98",
