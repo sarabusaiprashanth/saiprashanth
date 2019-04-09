@@ -1,41 +1,36 @@
-import java.util.*;
-
 public class Solution {
-    public int threeSumClosest(ArrayList<Integer> A, int B) {
-       int j, k, l,sum;
-        Collections.sort(A);
-        int n = A.size();
-        int val = A.get(0) + A.get(1) + A.get(2);    
+    public ArrayList<ArrayList<Integer>> threeSum(ArrayList<Integer> A) {
+                Collections.sort(A);
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
         
-        for (j = 0; j < n - 2; j++) {
-
-            l=j+1;
-            k=n-1;
-            int num = B - A.get(j);
+        for (int i=0;i<A.size()-2;i++) {
+            if (i > 0 && A.get(i).equals(A.get(i-1))) continue;
             
-            while (l < k) {
-                
-                sum = A.get(l) + A.get(k);
-                
-                if (sum == num)
-                    return B;
-                else if (sum < num) {
-                    l++;
-                } else {
+            int target = -A.get(i);
+            int j = i+1;
+            int k = A.size()-1;
+            
+            while (j<k) {
+                if (A.get(j) + A.get(k) == target) {
+                    ArrayList<Integer> temp = new ArrayList<>();
+                    temp.add(A.get(i)); 
+                    temp.add(A.get(j)); 
+                    temp.add(A.get(k));
+                    ans.add(temp);
+                    j++;
                     k--;
+                    
+                    while(j<k && A.get(j) == A.get(j-1)) j++;
+                    while(j<k && A.get(k) == A.get(k+1)) k--;
                 }
-                
-                int diff = Math.abs(sum - num);
-                int otherDiff = Math.abs(val - B);
-                
-                if (diff < otherDiff)
-                    val = sum + A.get(j);
-                
+                else if (A.get(j) + A.get(k) > target) k--;
+                else {
+                    j++;
+                }
             }
-            
         }
         
+        return ans;
         
-        return val;
     }
 }
