@@ -1,29 +1,41 @@
+import java.util.*;
+
 public class Solution {
-	public ArrayList<ArrayList<Integer>> anagrams(final List<String> a) {
-	    ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>(); 
-	    HashMap<String,ArrayList<Integer>> map = new HashMap<String,ArrayList<Integer>>();
-	    int n = a.size();
-	    ArrayList<Integer> list = new ArrayList<Integer>(); 
-	    for(int i = 0; i < n; i++)
-	    {
-	        char[] arr = a.get(i).toCharArray();
-	        Arrays.sort(arr);
-	        String str = new String(arr); 
-	        if(map.get(str) != null)
-	        {
-	            map.get(str).add(i+1); 
-	        }
-	        else { 
-	            ArrayList<Integer> g = new ArrayList<Integer>();
-                g.add(i+1);
-                map.put(str, g);
-	        }
-	    }
-	    
-	    for(ArrayList<Integer> l: map.values())
-	    {
-	        result.add(l); 
-	    }
-	    return result; 
-	}
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public ArrayList<ArrayList<Integer>> anagrams(final List<String> a) {
+         int n = a.size();
+            ArrayList<HashMap<Character,Integer>> sets = new ArrayList<>();
+            boolean check[] = new boolean[n];
+
+            for (int i = 0; i < n; i++) {
+                HashMap<Character,Integer> set = new HashMap<>();
+                for (Character c : a.get(i).toCharArray()) {
+                    if (set.containsKey(c))
+                        set.put(c,set.get(c)+1);
+                    else
+                        set.put(c,0);
+                }
+                sets.add(set);
+            }
+
+            ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+
+            for (int i = 0;i < n; i++)
+            if (check[i] == false){
+                ArrayList<Integer> list = new ArrayList<>();
+
+                list.add(i+1);
+
+                for (int j = i+1;j < n; j++){
+                    if (check[j] == false && sets.get(i).equals(sets.get(j))){
+                        check[j] = true;
+                        list.add(j+1);
+                    }
+                }
+
+                    res.add(list);
+            }
+            return res;
+        
+    }
 }
