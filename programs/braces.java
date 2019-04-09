@@ -1,23 +1,28 @@
 public class Solution {
-	public int braces(String a) {
-	    Stack<Character> stack = new Stack<Character>();
-	    for(int i = 0; i < a.length(); i++) {
-	        if(a.charAt(i) == '/' || a.charAt(i) == '*' || a.charAt(i) == '-' || a.charAt(i) == '+' || a.charAt(i) == ')') {
-	            stack.push(a.charAt(i));
-	        }
-		else if (a.charAt(i) == ')') 
-	        {
-	            int flag = 0;
-	             while(stack.peek() != '(')
-	             {
-	                flag = 1;
-	                stack.pop();	           
-	             }
-	            if(flag==0) 
-	            	return 1;
-	            stack.pop();
-	        }
-	    }
-	    return 0;
-	}
+    public int braces(String A) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : A.toCharArray()) {
+            if (c == ')') {
+                char top = stack.peek();
+                stack.pop();
+                
+                if (top == '(') return 1;
+                else {
+                    int count = 0;
+                    while (top != '(') {
+                        top = stack.peek();
+                        stack.pop();
+                        count++;
+                    }
+                    
+                    if (count == 1) return 1;
+                }
+            }
+            else {
+                stack.add(c);
+            }
+        }
+        
+        return 0;
+    }
 }
